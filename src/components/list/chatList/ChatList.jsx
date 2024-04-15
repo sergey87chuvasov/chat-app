@@ -17,6 +17,34 @@ function ChatList() {
           onClick={() => setAddMode((prev) => !prev)}
         />
       </div>
+      <div className='item'>
+        <img src='./avatar.png' alt='ava pic' />
+        <div className='texts'>
+          <span>Serge Ch</span>
+          <p>Hello</p>
+        </div>
+      </div>
+      <div className='item'>
+        <img src='./avatar.png' alt='ava pic' />
+        <div className='texts'>
+          <span>Serge Ch</span>
+          <p>Hello</p>
+        </div>
+      </div>
+      <div className='item'>
+        <img src='./avatar.png' alt='ava pic' />
+        <div className='texts'>
+          <span>Serge Ch</span>
+          <p>Hello</p>
+        </div>
+      </div>
+      <div className='item'>
+        <img src='./avatar.png' alt='ava pic' />
+        <div className='texts'>
+          <span>Serge Ch</span>
+          <p>Hello</p>
+        </div>
+      </div>
     </div>
   );
 }
