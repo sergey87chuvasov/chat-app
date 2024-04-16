@@ -19,7 +19,7 @@ function Chat() {
         <div className='user'>
           <img src='./avatar.png' alt='ava pic' />
           <div className='texts'>
-            <span>Serge Ch</span>
+            <span>Anna Ch</span>
             <p>Lorem ipsum dolor sit amet.</p>
           </div>
         </div>
@@ -29,7 +29,69 @@ function Chat() {
           <img src='./info.png' alt='icaon pic' />
         </div>
       </div>
-      <div className='center'></div>
+      <div className='center'>
+        <div className='message'>
+          <img src='./avatar.png' alt='ava pic' />
+          <div className='texts'>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
+              qui.
+            </p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message own'>
+          <div className='texts'>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
+              qui.
+            </p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message'>
+          <img src='./avatar.png' alt='ava pic' />
+          <div className='texts'>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
+              qui.
+            </p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message own'>
+          <div className='texts'>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
+              qui.
+            </p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message'>
+          <img src='./avatar.png' alt='ava pic' />
+          <div className='texts'>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
+              qui.
+            </p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message own'>
+          <div className='texts'>
+            <img
+              src='https://images.pexels.com/photos/1427581/pexels-photo-1427581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+              alt='img pic'
+            />
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
+              qui.
+            </p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+      </div>
       <div className='bottom'>
         <div className='icons'>
           <img src='./img.png' alt='icons pic' />
@@ -48,7 +110,9 @@ function Chat() {
             alt='emojies pic'
             onClick={() => setOpen((prev) => !prev)}
           />
-          <EmojiPicker open={open} onEmojiClick={handleEmoji} />
+          <div className='picker'>
+            <EmojiPicker open={open} onEmojiClick={handleEmoji} />
+          </div>
         </div>
         <button className='sendButton'>Send</button>
       </div>
