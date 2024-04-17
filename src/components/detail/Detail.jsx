@@ -35,7 +35,7 @@ function Detail() {
                 />
                 <span>photo_2024_2</span>
               </div>
-              <img src='./download.png' alt='icon pic' />
+              <img src='./download.png' alt='icon pic' className='icon' />
             </div>
             <div className='photoItem'>
               <div className='photoDetail'>
@@ -45,7 +45,7 @@ function Detail() {
                 />
                 <span>photo_2024_2</span>
               </div>
-              <img src='./download.png' alt='icon pic' />
+              <img src='./download.png' alt='icon pic' className='icon' />
             </div>
             <div className='photoItem'>
               <div className='photoDetail'>
@@ -55,7 +55,7 @@ function Detail() {
                 />
                 <span>photo_2024_2</span>
               </div>
-              <img src='./download.png' alt='icon pic' />
+              <img src='./download.png' alt='icon pic' className='icon' />
             </div>
             <div className='photoItem'>
               <div className='photoDetail'>
@@ -65,17 +65,7 @@ function Detail() {
                 />
                 <span>photo_2024_2</span>
               </div>
-              <img src='./download.png' alt='icon pic' />
-            </div>
-            <div className='photoItem'>
-              <div className='photoDetail'>
-                <img
-                  src='https://images.pexels.com/photos/1563524/pexels-photo-1563524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-                  alt=''
-                />
-                <span>photo_2024_2</span>
-              </div>
-              <img src='./download.png' alt='icon pic' />
+              <img src='./download.png' alt='icon pic' className='icon' />
             </div>
           </div>
         </div>
@@ -86,6 +76,7 @@ function Detail() {
           </div>
         </div>
         <button>Block User</button>
+        <button className='logout'>Logout</button>
       </div>
     </div>
   );
