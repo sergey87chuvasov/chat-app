@@ -17,11 +17,19 @@ const Login = () => {
     }
   };
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const { username, email, password } = Object.fromEntries(formData);
+    console.log(username, email, password);
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    toast.warn('TEST MSG!');
-    toast.success('HELLO MSG!');
-    toast.error('ERROR MSG!');
+    // toast.warn('TEST MSG!');
+    // toast.success('HELLO MSG!');
+    // toast.error('ERROR MSG!');
   };
 
   return (
@@ -37,7 +45,7 @@ const Login = () => {
       <div className='separator'></div>
       <div className='item'>
         <h2>Create an Account</h2>
-        <form>
+        <form onSubmit={handleRegister}>
           <label htmlFor='file'>
             <img src={avatar.url || './avatar.png'} alt='ava pic' />
             Upload an image
@@ -48,7 +56,7 @@ const Login = () => {
             style={{ display: 'none' }}
             onChange={handleAvatar}
           />
-          <input type='email' placeholder='Username' name='username' />
+          <input type='text' placeholder='Username' name='username' />
           <input type='email' placeholder='Email' name='email' />
           <input type='password' placeholder='Password' name='password' />
           <button>Sign Up</button>
