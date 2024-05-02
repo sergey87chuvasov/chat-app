@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import './chat.css';
 import EmojiPicker from 'emoji-picker-react';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
+import { useChatStore } from '../../lib/chatStore';
 
 function Chat() {
   const [chat, setChat] = useState();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
+
+  const { chatId } = useChatStore();
 
   const endRef = useRef(null);
 
@@ -16,24 +19,31 @@ function Chat() {
   });
 
   useEffect(() => {
-    const unSub = onSnapshot(
-      doc(db, 'chats', 'gFxngNEAJZjOU5SNaKcH'),
-      (res) => {
-        setChat(res.data());
-      }
-    );
+    const unSub = onSnapshot(doc(db, 'chats', chatId), (res) => {
+      setChat(res.data());
+    });
 
     return () => {
       unSub();
     };
-  }, []);
+  }, [chatId]);
 
-  console.log(chat);
+  // console.log(chat);
 
   const handleEmoji = (e) => {
     // console.log(e);
     setText((prev) => prev + e.emoji);
     setOpen(false);
+  };
+
+  const handleSend = async () => {
+    if (text === '') return;
+
+    try {
+      await updateDoc(doc(db, 'chats', chatId), {});
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // console.log(text);
@@ -54,6 +64,25 @@ function Chat() {
         </div>
       </div>
       <div className='center'>
+        {/* <div className='message'>
+          <img src='./avatar.png' alt='ava pic' />
+          <div className='texts'>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
+              qui.
+            </p>
+            <span>1 min ago</span>
+          </div>
+        </div> */}
+        {/* <div className='message own'>
+          <div className='texts'>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
+              qui.
+            </p>
+            <span>1 min ago</span>
+          </div>
+        </div>
         <div className='message'>
           <img src='./avatar.png' alt='ava pic' />
           <div className='texts'>
@@ -82,39 +111,16 @@ function Chat() {
             </p>
             <span>1 min ago</span>
           </div>
-        </div>
-        <div className='message own'>
-          <div className='texts'>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
-              qui.
-            </p>
-            <span>1 min ago</span>
+        </div> */}
+        {chat?.messages?.map((message) => (
+          <div className='message own' key={message?.createAt}>
+            <div className='texts'>
+              {message.img && <img src={message.img} alt='img pic' />}
+              <p>{message.text}</p>
+              {/* <span>1 min ago</span> */}
+            </div>
           </div>
-        </div>
-        <div className='message'>
-          <img src='./avatar.png' alt='ava pic' />
-          <div className='texts'>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
-              qui.
-            </p>
-            <span>1 min ago</span>
-          </div>
-        </div>
-        <div className='message own'>
-          <div className='texts'>
-            <img
-              src='https://images.pexels.com/photos/1427581/pexels-photo-1427581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-              alt='img pic'
-            />
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
-              qui.
-            </p>
-            <span>1 min ago</span>
-          </div>
-        </div>
+        ))}
         <div ref={endRef}></div>
       </div>
       <div className='bottom'>
@@ -139,7 +145,9 @@ function Chat() {
             <EmojiPicker open={open} onEmojiClick={handleEmoji} />
           </div>
         </div>
-        <button className='sendButton'>Send</button>
+        <button className='sendButton' onClick={handleSend}>
+          Send
+        </button>
       </div>
     </div>
   );
