@@ -11,11 +11,16 @@ import {
 import { db } from '../../lib/firebase';
 import { useChatStore } from '../../lib/chatStore';
 import { useUserStore } from '../../lib/userStore';
+import upload from '../../lib/upload';
 
 function Chat() {
   const [chat, setChat] = useState();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
+  const [img, setImg] = useState({
+    file: null,
+    url: '',
+  });
 
   const { currentUser } = useUserStore();
   const { chatId, user } = useChatStore();
@@ -44,15 +49,31 @@ function Chat() {
     setOpen(false);
   };
 
+  const handleImg = (e) => {
+    if (e.target.files[0]) {
+      setImg({
+        file: e.target.files[0],
+        url: URL.createObjectURL(e.target.files[0]),
+      });
+    }
+  };
+
   const handleSend = async () => {
     if (text === '') return;
 
+    let imgUrl = null;
+
     try {
+      if (img.file) {
+        imgUrl = await upload(img.file);
+      }
+
       await updateDoc(doc(db, 'chats', chatId), {
         messages: arrayUnion({
           senderId: currentUser.id,
           text,
           createdAt: new Date(),
+          ...(imgUrl && { img: imgUrl }),
         }),
       });
 
@@ -81,6 +102,13 @@ function Chat() {
     } catch (err) {
       console.log(err);
     }
+
+    setImg({
+      file: null,
+      url: '',
+    });
+
+    setText('');
   };
 
   // console.log(text);
@@ -150,7 +178,12 @@ function Chat() {
           </div>
         </div> */}
         {chat?.messages?.map((message) => (
-          <div className='message own' key={message?.createAt}>
+          <div
+            className={
+              message.senderId === currentUser?.id ? 'message own' : 'message'
+            }
+            key={message?.createAt}
+          >
             <div className='texts'>
               {message.img && <img src={message.img} alt='img pic' />}
               <p>{message.text}</p>
@@ -158,11 +191,28 @@ function Chat() {
             </div>
           </div>
         ))}
+
+        {img.url && (
+          <div className='message own '>
+            <div className='rexts'>
+              <img src={img.url} alt='img pic' />
+            </div>
+          </div>
+        )}
+
         <div ref={endRef}></div>
       </div>
       <div className='bottom'>
         <div className='icons'>
-          <img src='./img.png' alt='icons pic' />
+          <label htmlFor='file'>
+            <img src='./img.png' alt='icon pic' />
+          </label>
+          <input
+            type='file'
+            id='file'
+            style={{ display: 'none' }}
+            onChange={handleImg}
+          />
           <img src='./camera.png' alt='icons pic' />
           <img src='./mic.png' alt='icons pic' />
         </div>
